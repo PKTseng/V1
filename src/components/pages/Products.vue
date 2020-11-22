@@ -1,13 +1,12 @@
 <template>
   <div>
     <div class="text-right mt-3">
-      <<<<<<< HEAD=======<button
-        class="btn btn-outline-primary"
-        @click='openModel'
+      class="btn btn-outline-primary"
+      @click='openModel'
       >
-        >>>>>>> c96
-        建立新產品
-        </button>
+      >>>>>>> c96
+      建立新產品
+      </button>
     </div>
     <table class="table mt-4">
       <thead>
