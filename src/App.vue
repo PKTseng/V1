@@ -1,25 +1,13 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!-- <img src="./assets/logo.png"> -->
     <router-view />
-    <button type="button" class="btn btn-primary">Primary</button>
-    <button type="button" class="btn btn-secondary">Secondary</button>
-    <button type="button" class="btn btn-success">Success</button>
-    <button type="button" class="btn btn-danger">Danger</button>
-    <button type="button" class="btn btn-warning">Warning</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  created() {
-    const api = `${process.env.APIPATH}/api/${process.env.MYPATH}MYPATH/products`
-    console.log(process.env.APIPATH, process.env.MYPATH)
-    this.$http.get(api).then((response) => {
-      console.log(response.data)
-    })
-  }
+  name: 'App'
 }
 </script>
 

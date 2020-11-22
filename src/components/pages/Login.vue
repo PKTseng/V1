@@ -60,10 +60,13 @@ export default {
   },
   methods: {
     signIn() {
-      const api = `${process.env.APIPATH}/signin`
+      const api = `${process.env.APIPATH}/admin/signin`
       const vm = this
       this.$http.post(api, vm.user).then((response) => {
         console.log(response.data)
+        if (response.data.success) {
+          this.$router.push('/admin/products')
+        }
       })
     }
   }
