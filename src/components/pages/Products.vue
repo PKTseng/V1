@@ -1,16 +1,19 @@
 <template>
   <div>
-    <div class="text-roght mt-3">
-      建立新產品
+    <div class="text-right mt-3">
+      <button class="btn btn-outline-primary">
+        建立新產品
+      </button>
     </div>
     <table class="table mt-4">
       <thead>
         <tr>
-          <th>分類</th>
+          <th width='120'>分類</th>
           <th>產品名稱</th>
-          <th>產品價格</th>
-          <th>原價</th>
-          <th>特價</th>
+          <th width='120'>原價</th>
+          <th width='120'>特價</th>
+          <th width='100'>是否啟用</th>
+          <th width='80'>編輯</th>
         </tr>
       </thead>
       <tbody>
