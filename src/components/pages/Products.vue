@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="text-right mt-3">
-      class="btn btn-outline-primary"
-      @click='openModel'
+      <button
+        class="btn btn-outline-primary"
+        id='productModel'
+        @click='openModel'
       >
-      >>>>>>> c96
-      建立新產品
+        建立新產品
       </button>
     </div>
     <table class="table mt-4">
@@ -47,7 +48,7 @@
       <!-- Modal -->
       <div
         class="modal fade"
-        id="productModel"
+        id="exampleModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
