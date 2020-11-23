@@ -193,6 +193,8 @@
                       type="checkbox"
                       id="is_enabled"
                       v-model='tempProduct.is_enabled'
+                      :true-value="1"
+                      :false-value='0'
                     >
                     <label
                       class="form-check-label"
@@ -210,11 +212,16 @@
               type="button"
               class="btn btn-outline-secondary"
               data-dismiss="modal"
-            >取消</button>
+            >
+              取消
+            </button>
             <button
               type="button"
               class="btn btn-primary"
-            >確認</button>
+              @click='updateProduct'
+            >
+              確認
+            </button>
           </div>
         </div>
       </div>
@@ -287,6 +294,13 @@ export default {
       this.$http.get(api).then((response) => {
         console.log(response.data)
         this.products = response.data.products
+      })
+    },
+    updateProduct() {
+      const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product`
+      this.$http.post(api, { data: this.tempProduct }).then((response) => {
+        console.log(response.data)
+        // this.products = response.data.products
       })
     },
     openModel() {
