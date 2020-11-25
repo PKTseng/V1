@@ -20,10 +20,11 @@ new Vue({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('to',to, 'from',from);
   if (to.meta.requiresAuth) {
+    // console.log('要驗證');
     const api = `${process.env.APIPATH}/api/user/check`;
     axios.post(api).then(response => {
+      // console.log(response.data);
       if (response.data.success) {
         next()
       }else{
@@ -33,6 +34,6 @@ router.beforeEach((to, from, next) => {
       }
     });
   } else {
-     next()
+    next()
   }
 })

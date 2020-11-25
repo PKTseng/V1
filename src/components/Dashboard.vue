@@ -27,6 +27,10 @@ export default {
   components: {
     Navbar,
     Siderbar
+  },
+  created() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    this.$http.defaults.headers.common.Authorization = `${token}`
   }
 }
 </script>

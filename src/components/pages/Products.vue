@@ -292,15 +292,25 @@ export default {
     getProducts() {
       const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/products`
       this.$http.get(api).then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         this.products = response.data.products
       })
     },
     updateProduct() {
       const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product`
+      console.log(process.env.MYPATH)
       this.$http.post(api, { data: this.tempProduct }).then((response) => {
         console.log(response.data)
         // this.products = response.data.products
+        if (response.data.success) {
+          console.log(response.data.success)
+          $('#productModel').modal('hide')
+          this.getProducts()
+        } else {
+          console.log('新增失敗')
+          $('#productModel').modal('hide')
+          this.getProducts()
+        }
       })
     },
     openModel() {
