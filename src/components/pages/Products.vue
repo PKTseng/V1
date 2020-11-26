@@ -5,7 +5,7 @@
         class="btn btn-outline-primary"
         data-toggle="modal"
         data-target="#productModel"
-        @click='openModel'
+        @click='openModel(true)'
       >
         建立新產品
       </button>
@@ -43,6 +43,12 @@
               v-else
               class="text-primary"
             >未啟用</span>
+          </td>
+          <td>
+            <button
+              class="btn btn-outline-success btn-sm"
+              @click='openModel(false, item)'
+            >編輯</button>
           </td>
         </tr>
       </tbody>
@@ -282,7 +288,8 @@ export default {
   data() {
     return {
       products: [],
-      tempProduct: {}
+      tempProduct: {},
+      isNew: false
     }
   },
   created() {
@@ -297,13 +304,16 @@ export default {
       })
     },
     updateProduct() {
-      const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product`
+      let api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product`
+      let httpMethod = 'post'
       console.log(process.env.MYPATH)
-      this.$http.post(api, { data: this.tempProduct }).then((response) => {
-        console.log(response.data)
+      if (!this.isNew) {
+        api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product/${this.tempProduct.id}`
+        httpMethod = 'put'
+      }
+      this.$http[httpMethod](api, { data: this.tempProduct }).then((response) => {
         // this.products = response.data.products
         if (response.data.success) {
-          console.log(response.data.success)
           $('#productModel').modal('hide')
           this.getProducts()
         } else {
@@ -313,7 +323,16 @@ export default {
         }
       })
     },
-    openModel() {
+    openModel(isNew, item) {
+      console.log(item)
+      if (isNew) {
+        this.tempProduct = {}
+        console.log(this.tempProduct)
+        this.isNew = true
+      } else {
+        this.tempProduct = object.assign({}, item)
+        this.isNew = false
+      }
       $('#productModel').modal('show')
     }
   }
