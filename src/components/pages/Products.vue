@@ -18,7 +18,7 @@
           <th width='120'>原價</th>
           <th width='120'>特價</th>
           <th width='100'>是否啟用</th>
-          <th width='80'>編輯</th>
+          <th width='120'>編輯 / 刪除</th>
         </tr>
       </thead>
       <tbody>
@@ -38,17 +38,29 @@
             <span
               v-if='item.is_enabled'
               class="text-success"
-            >啟用</span>
+            >
+              啟用
+            </span>
             <span
               v-else
               class="text-primary"
-            >未啟用</span>
+            >
+              未啟用
+            </span>
           </td>
           <td>
             <button
               class="btn btn-outline-success btn-sm"
               @click='openModel(false, item)'
-            >編輯</button>
+            >
+              編輯
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click='deletModel(item)'
+            >
+              刪除
+            </button>
           </td>
         </tr>
       </tbody>
@@ -273,6 +285,7 @@
             <button
               type="button"
               class="btn btn-danger"
+              @click="delProduct"
             >確認刪除</button>
           </div>
         </div>
@@ -306,7 +319,6 @@ export default {
     updateProduct() {
       let api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product`
       let httpMethod = 'post'
-      console.log(process.env.MYPATH)
       if (!this.isNew) {
         api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product/${this.tempProduct.id}`
         httpMethod = 'put'
@@ -330,10 +342,29 @@ export default {
         console.log(this.tempProduct)
         this.isNew = true
       } else {
-        this.tempProduct = object.assign({}, item)
+        this.tempProduct = Object.assign({}, item)
         this.isNew = false
       }
       $('#productModel').modal('show')
+    },
+    deletModel(item) {
+      this.tempProduct = Object.assign({}, item)
+      $('#delProductModal').modal('show')
+    },
+    delProduct() {
+      const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/product/${this.tempProduct.id}`
+      this.$http.delete(api, { data: this.tempProduct }).then((response) => {
+        console.log(response.data)
+        if (response.data.success) {
+          $('#delProductModal').modal('hide')
+          this.getProducts()
+        } else {
+          $('#delProductModal').modal('hide')
+          this.getProducts()
+          console.log('刪除失敗')
+          console.log(api)
+        }
+      })
     }
   }
 }
