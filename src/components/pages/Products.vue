@@ -18,7 +18,7 @@
           <th width='120'>原價</th>
           <th width='120'>特價</th>
           <th width='100'>是否啟用</th>
-          <th width='120'>編輯 / 刪除</th>
+          <th width='150'>編輯 / 刪除</th>
         </tr>
       </thead>
       <tbody>
@@ -117,6 +117,7 @@
                     id="customFile"
                     class="form-control"
                     ref="files"
+                    @change='uploadImg'
                   >
                 </div>
                 <img
@@ -336,10 +337,9 @@ export default {
       })
     },
     openModel(isNew, item) {
-      console.log(item)
       if (isNew) {
         this.tempProduct = {}
-        console.log(this.tempProduct)
+        // console.log(this.tempProduct)
         this.isNew = true
       } else {
         this.tempProduct = Object.assign({}, item)
@@ -365,6 +365,29 @@ export default {
           console.log(api)
         }
       })
+    },
+    uploadImg() {
+      //利用 console 查看圖片內容
+      console.log(this)
+      const uploadFile = this.$refs.files.files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', uploadFile)
+      //接下來定義路徑
+      const url = `${process.env.APIPATH}/api/${process.env.MYPATH}/admin/upload`
+      this.$http
+        .post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.success) {
+            // this.tempProduct.imgUrl = res.data.imageUrl
+            console.log(this.tempProduct)
+            this.$set(this.tempProduct, 'imgUrl', res.data.imageUrl)
+          }
+        })
     }
   }
 }
