@@ -105,7 +105,7 @@
                     class="form-control"
                     id="image"
                     placeholder="請輸入圖片連結"
-                    v-model='tempProduct.image'
+                    v-model='tempProduct.imgUrl'
                   >
                 </div>
                 <div class="form-group">
@@ -124,6 +124,7 @@
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
                   class="img-fluid"
                   alt=""
+                  :src='tempProduct.imgUrl'
                 >
               </div>
               <div class="col-sm-8">
