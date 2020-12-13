@@ -2,11 +2,20 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'bootstrap'
+// Import component
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+// 上面載入npm 
 
+// 下面自定義
 import axios from "axios";
 import VueAxios from "vue-axios";
 
 Vue.use(VueAxios, axios);
+
+// 全域使用
+Vue.component('Loading', Loading)
 
 Vue.config.productionTip = false
 

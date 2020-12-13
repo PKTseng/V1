@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div class="text-right mt-3">
       <button
         class="btn btn-outline-primary"
@@ -110,7 +111,10 @@
                 </div>
                 <div class="form-group">
                   <label for="customFile">或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i
+                      class="fas fa-spinner fa-spin"
+                      v-if='status.fileUpLoading'
+                    ></i>
                   </label>
                   <input
                     type="file"
@@ -304,7 +308,11 @@ export default {
     return {
       products: [],
       tempProduct: {},
-      isNew: false
+      isNew: false,
+      isLoading: false,
+      status: {
+        fileUpLoading: false
+      }
     }
   },
   created() {
@@ -313,9 +321,11 @@ export default {
   methods: {
     getProducts() {
       const api = `${process.env.APIPATH}/api/${process.env.MYPATH}/products`
+      this.isLoading = true
       this.$http.get(api).then((response) => {
         // console.log(response.data)
         this.products = response.data.products
+        this.isLoading = false
       })
     },
     updateProduct() {
@@ -340,7 +350,6 @@ export default {
     openModel(isNew, item) {
       if (isNew) {
         this.tempProduct = {}
-        // console.log(this.tempProduct)
         this.isNew = true
       } else {
         this.tempProduct = Object.assign({}, item)
@@ -369,7 +378,7 @@ export default {
     },
     uploadImg() {
       //利用 console 查看圖片內容
-      console.log(this)
+      this.status.fileUpLoading = true
       const uploadFile = this.$refs.files.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadFile)
@@ -383,6 +392,7 @@ export default {
         })
         .then((res) => {
           console.log(res.data)
+          this.status.fileUpLoading = false
           if (res.data.success) {
             // this.tempProduct.imgUrl = res.data.imageUrl
             console.log(this.tempProduct)
